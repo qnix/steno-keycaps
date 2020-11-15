@@ -99,6 +99,7 @@ module thumb_key(c, nu, corner_rv) {
   }
 }
 
+
 // key("A");
 // letter("A");
 
@@ -106,3 +107,31 @@ module thumb_key(c, nu, corner_rv) {
 // thumb_letter("U");
 
 // translate([0, 0, stem_high / 2]) keycap(1.5, corner_rv);
+
+module dented_keycap() {
+  difference() {
+    translate([0, 0, stem_high/2.0])
+      rotate([180, 0, 0]) keycap(1, corner_rv);
+
+    union() {
+      // dent in the middle
+      translate([0, 0, stem_high + 0.10])
+        scale([1, 1, 0.20]) sphere(r=kc_width * 0.3);
+
+      // dents on the tips
+      translate([0, kc_width/2.0, stem_high + 0.10])
+        scale([1, 0.6, 0.15]) sphere(r=kc_width * 0.3);
+
+      translate([0, -kc_width/2.0, stem_high + 0.10])
+        scale([1, 0.6, 0.15]) sphere(r=kc_width * 0.3);
+
+      translate([kc_width/2.0, 0, stem_high + 0.10])
+        scale([0.6, 1, 0.15]) sphere(r=kc_width * 0.3);
+
+      translate([-kc_width/2.0, 0, stem_high + 0.10])
+        scale([0.6, 1, 0.15]) sphere(r=kc_width * 0.3);
+    }
+  }
+}
+
+dented_keycap();
